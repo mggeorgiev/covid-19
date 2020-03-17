@@ -21,13 +21,14 @@ namespace covid_19.Controllers
             _context = context;
         }
 
+
+
         // GET: api/All
         [HttpGet]
         public async Task<ActionResult<IEnumerable<All>>> GetAll()
         {
             return await _context.All.ToListAsync();
         }
-
 
 
         // GET: api/All/5
