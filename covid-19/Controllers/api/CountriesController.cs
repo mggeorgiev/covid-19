@@ -118,15 +118,10 @@ namespace covid_19.Controllers
                     country.Date = DateTime.Now;
                     list.Add(country);
                 }
-                //country.Name = alls.country;
-                //country.Recovered = alls.recovered;
-                //country.TodayCases = alls.todayCases;
-                //country.TodayDeaths = alls.todayDeaths;
-                //country.Active = alls.active;
-                //all.Date = DateTime.Now;
 
                 _context.Countries.AddRange(list);
                 await _context.SaveChangesAsync();
+                return Ok();
             }
             else //web api sent error response 
             {
