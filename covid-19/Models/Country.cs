@@ -7,6 +7,7 @@ namespace covid_19.Models
 {
     public class Country
     {
+        public int Id { get; set; }
         //public string Country { get; set; }
         public string Name { get; set; }
         public int Cases { get; set; }

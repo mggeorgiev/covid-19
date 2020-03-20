@@ -14,5 +14,6 @@ namespace covid_19.Data
         {
         }
         public DbSet<covid_19.Models.All> All { get; set; }
+        public DbSet<covid_19.Models.Country> Countries { get; set; }
     }
 }
