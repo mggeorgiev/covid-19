@@ -17,5 +17,7 @@ namespace covid_19.Models
         public int Recovered { get; set; }
         public int Active { get; set; }
         public int Critical { get; set; }
+
+        public DateTime Date { get; set; }
     }
 }

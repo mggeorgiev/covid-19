@@ -115,6 +115,7 @@ namespace covid_19.Controllers
                     country.Critical = item.critical;
                     country.Cases = item.cases;
                     country.Deaths = item.deaths;
+                    country.Date = DateTime.Now;
                     list.Add(country);
                 }
                 //country.Name = alls.country;
