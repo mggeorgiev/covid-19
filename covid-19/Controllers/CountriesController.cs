@@ -117,12 +117,6 @@ namespace covid_19.Controllers
                     country.Deaths = item.deaths;
                     list.Add(country);
                 }
-                //country.Name = alls.country;
-                //country.Recovered = alls.recovered;
-                //country.TodayCases = alls.todayCases;
-                //country.TodayDeaths = alls.todayDeaths;
-                //country.Active = alls.active;
-                //all.Date = DateTime.Now;
 
                 _context.Countries.AddRange(list);
                 await _context.SaveChangesAsync();
@@ -134,11 +128,7 @@ namespace covid_19.Controllers
                 throw new NotImplementedException();
             }
 
-            //_context.Countries.Add(country);
-            //await _context.SaveChangesAsync();
-
             return Ok();
-            //return CreatedAtAction("GetCountry", new { id = country.Id }, country);
         }
 
         // DELETE: api/Countries/5
