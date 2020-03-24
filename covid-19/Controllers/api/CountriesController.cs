@@ -115,11 +115,13 @@ namespace covid_19.Controllers
                     country.Critical = item.critical;
                     country.Cases = item.cases;
                     country.Deaths = item.deaths;
+                    country.Date = DateTime.Now;
                     list.Add(country);
                 }
 
                 _context.Countries.AddRange(list);
                 await _context.SaveChangesAsync();
+                return Ok();
             }
             else //web api sent error response 
             {
