@@ -1,0 +1,42 @@
+﻿@model covid_19.Data.DTOs.countryDTO;
+
+@{
+    ViewData["Title"] = "Country";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Country</h1>
+
+<p>
+    <a asp-action="Create">Create New</a> |
+    <a asp-action="Load">Load</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.cases)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.deaths)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.recovered)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                @Html.DisplayFor(model => model.cases)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.deaths)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.recovered)
+            </td>
+        </tr>
+    </tbody>
+</table>
+

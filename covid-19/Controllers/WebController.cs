@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using covid_19.Models;
+using covid_19.Data.DTOs;
 
 namespace covid_19.Controllers
 {
@@ -15,6 +16,16 @@ namespace covid_19.Controllers
 
             if(all != null)
                 return View(all);
+
+            throw new NotImplementedException();
+        }
+
+        public IActionResult Countries()
+        {
+            var countries = new covid_19.Data.DTOs.countryDTO();
+
+            if (countries != null)
+                return View(countries);
 
             throw new NotImplementedException();
         }
