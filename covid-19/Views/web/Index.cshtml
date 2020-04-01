@@ -1,4 +1,4 @@
-﻿@model IEnumerable<covid_19.Models.allDTO>
+﻿@model covid_19.Models.allDTO
 
 @{
     ViewData["Title"] = "All";
@@ -26,20 +26,17 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
-        {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.cases)
+                    @Html.DisplayFor(model => model.cases)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.deaths)
+                    @Html.DisplayFor(model => model.deaths)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.recovered)
+                    @Html.DisplayFor(model => model.recovered)
                 </td>
             </tr>
-        }
     </tbody>
 </table>
 
