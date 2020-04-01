@@ -133,7 +133,7 @@ namespace covid_19.Controllers
             //_context.Countries.Add(country);
             //await _context.SaveChangesAsync();
 
-            return Ok();
+            //return Ok();
             //return CreatedAtAction("GetCountry", new { id = country.Id }, country);
         }
 
