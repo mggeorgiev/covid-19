@@ -1,0 +1,45 @@
+﻿@model IEnumerable<covid_19.Models.allDTO>
+
+@{
+    ViewData["Title"] = "All";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>All</h1>
+
+<p>
+    <a asp-action="Create">Create New</a> |
+    <a asp-action="Load">Load</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.cases)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.deaths)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.recovered)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.cases)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.deaths)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.recovered)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
