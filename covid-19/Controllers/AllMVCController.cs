@@ -20,9 +20,15 @@ namespace covid_19.Controllers
         }
 
         // GET: AllMVC
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string sortOrder)
         {
-            return View(await _context.All.ToListAsync());
+            //if (sortOrder == "desc")
+            //    var all = await _context.All
+            //        .FirstOrDefaultAsync(m => m.Id == id);
+
+            var all = await _context.All.ToListAsync();
+            //sortOrder == "desc" ? all.OrderByDescending(a => a.Date) : all.OrderBy(a => a.Date);
+            return View(all);
         }
 
         // GET: Load

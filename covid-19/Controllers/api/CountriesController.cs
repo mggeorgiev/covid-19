@@ -130,7 +130,11 @@ namespace covid_19.Controllers
                 throw new NotImplementedException();
             }
 
-            return Ok();
+            //_context.Countries.Add(country);
+            //await _context.SaveChangesAsync();
+
+            //return Ok();
+            //return CreatedAtAction("GetCountry", new { id = country.Id }, country);
         }
 
         // DELETE: api/Countries/5
