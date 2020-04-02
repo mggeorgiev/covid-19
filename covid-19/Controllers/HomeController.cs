@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using covid_19.Models;
+using covid_19.Controllers;
 
 namespace covid_19.Controllers
 {
@@ -20,7 +21,11 @@ namespace covid_19.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            var all = new allDTO();
+
+            all = WebController.GetAllFromHeraku("");
+
+            return View(all);
         }
 
         public IActionResult Privacy()

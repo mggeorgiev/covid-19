@@ -8,8 +8,19 @@
 <h1>All</h1>
 
 <p>
-    <a asp-action="Create">Create New</a> |
-    <a asp-action="Load">Load</a>
+    <a asp-action="Index" asp-controller="web" class="btn btn-outline-primary">Reload</a> |
+    @*<form id="selectLanguage" asp-controller="All" asp-action="PostAll" asp-route-returnUrl="@Context.Request.Path" method="post" role="form">
+        <div>
+            <button type="submit" name="culture" value="@culture.Name">
+                Save
+            </button>
+        </div>
+    </form>*@
+    <form asp-action="Create">
+
+            <input type="submit" value="Create" class="btn btn-outline-primary" />
+    </form>
+    <a asp-action="Save" asp-controller="web" class="btn btn-outline-secondary">Save</a>
 </p>
 <table class="table">
     <thead>
@@ -39,4 +50,3 @@
             </tr>
     </tbody>
 </table>
-

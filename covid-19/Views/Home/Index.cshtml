@@ -1,4 +1,6 @@
-﻿@{
+﻿@model covid_19.Models.allDTO
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -6,8 +8,33 @@
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
-<div>
-    <table>
-
+<div class="text-center">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.cases)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.deaths)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.recovered)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    @Html.DisplayFor(model => model.cases)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.deaths)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.recovered)
+                </td>
+            </tr>
+        </tbody>
     </table>
 </div>
