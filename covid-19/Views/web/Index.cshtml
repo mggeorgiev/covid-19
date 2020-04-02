@@ -10,16 +10,13 @@
 <p>
     <a asp-action="Index" asp-controller="web" class="btn btn-outline-primary">Reload</a> |
     @*<form id="selectLanguage" asp-controller="All" asp-action="PostAll" asp-route-returnUrl="@Context.Request.Path" method="post" role="form">
-        <div>
-            <button type="submit" name="culture" value="@culture.Name">
-                Save
-            </button>
-        </div>
-    </form>*@
-    <form asp-action="Create">
+            <div>
+                <button type="submit" name="culture" value="@culture.Name">
+                    Save
+                </button>
+            </div>
+        </form>*@
 
-            <input type="submit" value="Create" class="btn btn-outline-primary" />
-    </form>
     <a asp-action="Save" asp-controller="web" class="btn btn-outline-secondary">Save</a>
 </p>
 <table class="table">
@@ -37,16 +34,21 @@
         </tr>
     </thead>
     <tbody>
-            <tr>
-                <td>
-                    @Html.DisplayFor(model => model.cases)
-                </td>
-                <td>
-                    @Html.DisplayFor(model => model.deaths)
-                </td>
-                <td>
-                    @Html.DisplayFor(model => model.recovered)
-                </td>
-            </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(model => model.cases)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.deaths)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.recovered)
+            </td>
+        </tr>
     </tbody>
 </table>
+
+<form asp-action="Create">
+
+    <input type="submit" value="Create" class="btn btn-outline-primary" />
+</form>

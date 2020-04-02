@@ -23,7 +23,7 @@ namespace covid_19.Controllers
         {
             var all = new allDTO();
 
-            all = WebController.GetAllFromHeraku("");
+            all = Infrastructure.Heraku.GetAllDTOFromHeraku("");
 
             return View(all);
         }
