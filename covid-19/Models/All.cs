@@ -13,5 +13,14 @@ namespace covid_19.Models
         public int Cases { get; set; }
         public int Deaths { get; set; }
         public int Recovered { get; set; }
+
+        public All() {}
+
+        public All(allDTO allDTO)
+        {
+            this.Cases = allDTO.cases;
+            this.Deaths = allDTO.deaths;
+            this.Recovered = allDTO.recovered;
+        }
     }
 }
