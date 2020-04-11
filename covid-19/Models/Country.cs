@@ -19,5 +19,22 @@ namespace covid_19.Models
         public int Critical { get; set; }
 
         public DateTime Date { get; set; }
+
+        public Country() 
+        {
+        
+        }
+
+        public Country (covid_19.Data.DTOs.countryDTO countryDTO)
+        {
+            this.Active = countryDTO.active;
+            this.Cases = countryDTO.cases;
+            this.Critical = countryDTO.critical;
+            this.Deaths = countryDTO.deaths;
+            this.Name = countryDTO.country;
+            this.Recovered = countryDTO.recovered;
+            this.TodayCases = countryDTO.todayCases;
+            this.TodayDeaths = countryDTO.todayDeaths;
+        }
     }
 }

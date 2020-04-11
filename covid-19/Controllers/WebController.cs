@@ -57,14 +57,39 @@ namespace covid_19.Controllers
             return View();
         }
 
-        public IActionResult Countries()
+        public async Task<IActionResult> Countries()
         {
-            var countries = new covid_19.Data.DTOs.countryDTO();
+            List<countryDTO> countries = new List<countryDTO>();
+            countries = covid_19.Infrastructure.Heraku.GetCountryFromHeraku("");
+
+            IEnumerable<countryDTO> sorted = new List<countryDTO>();
+            countries.RemoveAll(t => t.country == "Total:");
+
 
             if (countries != null)
-                return View(countries);
+                return View(countries.OrderByDescending(c => c.cases).ToList());
 
             throw new NotImplementedException();
+        }
+
+        public async Task<IActionResult> SaveCountries(IEnumerable<countryDTO> countries, DateTime timestamp)
+        {
+            if (countries.Count() == 0)
+                countries = covid_19.Infrastructure.Heraku.GetCountryFromHeraku("");
+
+            if (timestamp == DateTime.MinValue)
+                timestamp = DateTime.Now;
+
+            foreach(var item in countries)
+            {
+                var country = new Country(item);
+                country.Date = timestamp;
+                _context.Add(country);
+            }
+
+                await _context.SaveChangesAsync();
+
+            return View(nameof(Countries), countries.OrderByDescending(c => c.cases).ToList());
         }
     }
 }

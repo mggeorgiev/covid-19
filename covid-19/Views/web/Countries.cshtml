@@ -1,0 +1,82 @@
+﻿@model List<covid_19.Data.DTOs.countryDTO>;
+
+@{
+    ViewData["Title"] = "Country";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Country</h1>
+@{DateTime timestamp = DateTime.Now; }
+
+<p>
+    <a asp-action="SaveCountries" asp-route-timestamp=@timestamp>Save</a> |
+    <a asp-controller="Web" asp-action="Countries">ReLoad</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Time Stamp
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].country)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].cases)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].active)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].deaths)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].recovered)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].critical)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].todayCases)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].todayDeaths)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @timestamp
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.country)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.cases)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.active)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.deaths)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.recovered)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.critical)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.todayCases)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.todayDeaths)
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+

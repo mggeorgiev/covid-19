@@ -125,9 +125,10 @@ namespace covid_19.Controllers
         public async Task<ActionResult<All>> PostAll()
         {
 
-            All all = new All();
-
-            all = GetAllFromHeraku("");
+            allDTO allDTO = new allDTO();
+            allDTO = covid_19.Infrastructure.Heraku.GetAllDTOFromHeraku("");
+            
+            All all = new All(allDTO);
 
             if (all != null )
 
