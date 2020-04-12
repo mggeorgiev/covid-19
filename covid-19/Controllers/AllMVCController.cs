@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using covid_19.Data;
 using covid_19.Models;
 using System.Text;
+using ClosedXML.Excel;
+using System.IO;
 
 namespace covid_19.Controllers
 {
@@ -173,7 +175,6 @@ namespace covid_19.Controllers
             var builder = new StringBuilder();
             builder.AppendLine("Id,Date,Cases,Recovered,Deaths");
 
-            //var alls = new All();
             var all = await _context.All.ToListAsync();
 
             foreach (var item in all)
@@ -185,9 +186,41 @@ namespace covid_19.Controllers
         }
 
         // GET: AllMVC/Excel
-        public IActionResult Excel()
+        public async Task<IActionResult> Excel()
         {
-            throw new NotImplementedException();
+            using (var workbook = new XLWorkbook())
+            {
+                var worksheet = workbook.Worksheets.Add("All");
+                var currentRow = 1;
+                worksheet.Cell(currentRow, 1).Value = "Id";
+                worksheet.Cell(currentRow, 2).Value = "Date";
+                worksheet.Cell(currentRow, 3).Value = "Cases";
+                worksheet.Cell(currentRow, 4).Value = "Recovered";
+                worksheet.Cell(currentRow, 5).Value = "Deaths";
+
+                var all = await _context.All.ToListAsync();
+    
+                foreach (var item in all)
+                {
+                    currentRow++;
+                    worksheet.Cell(currentRow, 1).Value = item.Id;
+                    worksheet.Cell(currentRow, 2).Value = item.Date;
+                    worksheet.Cell(currentRow, 3).Value = item.Cases;
+                    worksheet.Cell(currentRow, 4).Value = item.Recovered;
+                    worksheet.Cell(currentRow, 5).Value = item.Deaths;
+                }
+
+                using (var stream = new MemoryStream())
+                {
+                    workbook.SaveAs(stream);
+                    var content = stream.ToArray();
+
+                    return File(
+                        content,
+                        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                        "all-" + DateTime.Now.ToString("yyyyMMdd-HHmmss") +".xlsx");
+                }
+            }
         }
 
         private bool AllExists(int id)
