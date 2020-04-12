@@ -167,6 +167,7 @@ namespace covid_19.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        // GET: AllMVC/Csv
         public async Task<IActionResult> Csv()
         {
             var builder = new StringBuilder();
@@ -183,6 +184,7 @@ namespace covid_19.Controllers
             return File(Encoding.UTF8.GetBytes(builder.ToString()), "text/csv", "all.csv");
         }
 
+        // GET: AllMVC/Excel
         public IActionResult Excel()
         {
             throw new NotImplementedException();
