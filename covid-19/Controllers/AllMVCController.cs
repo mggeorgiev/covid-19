@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using covid_19.Data;
 using covid_19.Models;
+using System.Text;
 
 namespace covid_19.Controllers
 {
@@ -34,7 +35,16 @@ namespace covid_19.Controllers
         // GET: Load
         public async Task<IActionResult> Load()
         {
-            return View("Index", await _context.All.ToListAsync());
+            var allDTO = covid_19.Infrastructure.Heraku.GetAllDTOFromHeraku("");
+            var all = new All(allDTO)
+            { 
+                Date = DateTime.Now 
+            };
+
+            _context.Add(all);
+            await _context.SaveChangesAsync();
+
+            return View("Index", await _context.All.OrderByDescending(a => a.Date).ToListAsync());
         }
 
         // GET: AllMVC/Details/5
@@ -155,6 +165,27 @@ namespace covid_19.Controllers
             _context.All.Remove(all);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> Csv()
+        {
+            var builder = new StringBuilder();
+            builder.AppendLine("Id,Date,Cases,Recovered,Deaths");
+
+            //var alls = new All();
+            var all = await _context.All.ToListAsync();
+
+            foreach (var item in all)
+            {
+                builder.AppendLine($"{item.Id},{item.Date},{item.Cases},{item.Recovered},{item.Deaths}");
+            }
+
+            return File(Encoding.UTF8.GetBytes(builder.ToString()), "text/csv", "all.csv");
+        }
+
+        public IActionResult Excel()
+        {
+            throw new NotImplementedException();
         }
 
         private bool AllExists(int id)
