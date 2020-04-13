@@ -35,7 +35,7 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Date)
+                @Html.DisplayFor(modelItem => item.Date,"yyyy-MM-dd HH:mm:ss")
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Cases)

@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using covid_19.Data;
 using covid_19.Models;
+using ClosedXML.Excel;
+using System.Text;
+using System.IO;
 
 namespace covid_19.Controllers
 {
@@ -143,6 +146,82 @@ namespace covid_19.Controllers
             _context.Countries.Remove(country);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+        }
+
+        // GET: AllMVC/Csv
+        public async Task<IActionResult> Csv()
+        {
+            var builder = new StringBuilder();
+            builder.AppendLine("Id,Name,Date,Cases,Recovered,Deaths,TodayCases,TodayDeaths,Active,Critical,Country");
+
+            var countries = await _context.Countries.ToListAsync();
+
+            foreach (var item in countries)
+            {
+                builder.AppendLine($"{item.Id}" +
+                                   $",{item.Name}" +
+                                   $",{item.Date}" +
+                                   $",{item.Cases}" +
+                                   $",{item.Recovered}" +
+                                   $",{item.Deaths}" +
+                                   $",{item.TodayCases}" +
+                                   $",{item.TodayDeaths}" +
+                                   $",{item.Active}" +
+                                   $",{item.Critical}" +
+                                   $",{item.Name}");
+            }
+
+            return File(Encoding.UTF8.GetBytes(builder.ToString())
+                                , "text/csv"
+                                , "countries-"+ DateTime.Now.ToString("yyyy-MM-dd HHmmss") +".csv");
+        }
+
+        // GET: AllMVC/Excel
+        public async Task<IActionResult> Excel()
+        {
+            using (var workbook = new XLWorkbook())
+            {
+                var worksheet = workbook.Worksheets.Add("All");
+                var currentRow = 1;
+                worksheet.Cell(currentRow, 1).Value = "Id";
+                worksheet.Cell(currentRow, 2).Value = "Date";
+                worksheet.Cell(currentRow, 3).Value = "Cases";
+                worksheet.Cell(currentRow, 4).Value = "Recovered";
+                worksheet.Cell(currentRow, 5).Value = "Deaths";
+                worksheet.Cell(currentRow, 6).Value = "TodayCases";
+                worksheet.Cell(currentRow, 7).Value = "TodayDeaths";
+                worksheet.Cell(currentRow, 8).Value = "Active";
+                worksheet.Cell(currentRow, 9).Value = "Critical";
+                worksheet.Cell(currentRow, 10).Value = "Country";
+
+                var countries = await _context.Countries.ToListAsync();
+
+                foreach (var item in countries)
+                {
+                    currentRow++;
+                    worksheet.Cell(currentRow, 1).Value = item.Id;
+                    worksheet.Cell(currentRow, 2).Value = item.Date;
+                    worksheet.Cell(currentRow, 3).Value = item.Cases;
+                    worksheet.Cell(currentRow, 4).Value = item.Recovered;
+                    worksheet.Cell(currentRow, 5).Value = item.Deaths;
+                    worksheet.Cell(currentRow, 6).Value = item.TodayCases;
+                    worksheet.Cell(currentRow, 7).Value = item.TodayDeaths;
+                    worksheet.Cell(currentRow, 8).Value = item.Active;
+                    worksheet.Cell(currentRow, 9).Value = item.Critical;
+                    worksheet.Cell(currentRow, 10).Value = item.Name;
+                }
+
+                using (var stream = new MemoryStream())
+                {
+                    workbook.SaveAs(stream);
+                    var content = stream.ToArray();
+
+                    return File(
+                        content,
+                        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                        "all-" + DateTime.Now.ToString("yyyyMMdd-HHmmss") + ".xlsx");
+                }
+            }
         }
 
         private bool CountryExists(int id)
