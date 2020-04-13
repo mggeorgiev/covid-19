@@ -45,6 +45,18 @@
             <th>
                 @Html.DisplayNameFor(model => model[0].todayDeaths)
             </th>
+            <th>
+                Cases per 1M
+            </th>
+            <th>
+                Tests per 1M
+            </th>
+            <th>
+                Total Tests
+            </th>
+            <th>
+                Deaths Per 1M
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -77,6 +89,18 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.todayDeaths)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.casesPerOneMillion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.testsPerOneMillion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.totalTests)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.deathsPerOneMillion)
             </td>
         </tr>
         }

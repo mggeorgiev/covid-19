@@ -115,6 +115,10 @@ namespace covid_19.Controllers
                     country.Critical = item.critical;
                     country.Cases = item.cases;
                     country.Deaths = item.deaths;
+                    country.testsPerOneMillion = item.testsPerOneMillion;
+                    country.casesPerOneMillion = item.casesPerOneMillion;
+                    country.deathsPerOneMillion = item.deathsPerOneMillion;
+                    country.totalTests = item.totalTests;
                     country.Date = DateTime.Now;
                     list.Add(country);
                 }
