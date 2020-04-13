@@ -152,7 +152,7 @@ namespace covid_19.Controllers
         public async Task<IActionResult> Csv()
         {
             var builder = new StringBuilder();
-            builder.AppendLine("Id,Name,Date,Cases,Recovered,Deaths,TodayCases,TodayDeaths,Active,Critical,Country");
+            builder.AppendLine("Id,Name,Date,Cases,Recovered,Deaths,TodayCases,TodayDeaths,Active,Critical,Country,Tests per 1M, Total test, Cases per 1M, Deaths per 1M");
 
             var countries = await _context.Countries.ToListAsync();
 
@@ -168,7 +168,11 @@ namespace covid_19.Controllers
                                    $",{item.TodayDeaths}" +
                                    $",{item.Active}" +
                                    $",{item.Critical}" +
-                                   $",{item.Name}");
+                                   $",{item.Name}," +
+                                   $"{item.testsPerOneMillion}," +
+                                   $"{item.totalTests}," +
+                                   $"{item.casesPerOneMillion}," +
+                                   $"{item.deathsPerOneMillion}");
             }
 
             return File(Encoding.UTF8.GetBytes(builder.ToString())
@@ -181,7 +185,7 @@ namespace covid_19.Controllers
         {
             using (var workbook = new XLWorkbook())
             {
-                var worksheet = workbook.Worksheets.Add("All");
+                var worksheet = workbook.Worksheets.Add("Countries");
                 var currentRow = 1;
                 worksheet.Cell(currentRow, 1).Value = "Id";
                 worksheet.Cell(currentRow, 2).Value = "Date";
@@ -193,6 +197,10 @@ namespace covid_19.Controllers
                 worksheet.Cell(currentRow, 8).Value = "Active";
                 worksheet.Cell(currentRow, 9).Value = "Critical";
                 worksheet.Cell(currentRow, 10).Value = "Country";
+                worksheet.Cell(currentRow, 11).Value = "Tests per 1M"; 
+                worksheet.Cell(currentRow, 12).Value = "Total test"; 
+                worksheet.Cell(currentRow, 13).Value = "Cases per 1M"; 
+                worksheet.Cell(currentRow, 14).Value = "Deaths per 1M"; 
 
                 var countries = await _context.Countries.ToListAsync();
 
@@ -209,6 +217,10 @@ namespace covid_19.Controllers
                     worksheet.Cell(currentRow, 8).Value = item.Active;
                     worksheet.Cell(currentRow, 9).Value = item.Critical;
                     worksheet.Cell(currentRow, 10).Value = item.Name;
+                    worksheet.Cell(currentRow, 11).Value = item.testsPerOneMillion;
+                    worksheet.Cell(currentRow, 12).Value = item.totalTests;
+                    worksheet.Cell(currentRow, 13).Value = item.casesPerOneMillion;
+                    worksheet.Cell(currentRow, 14).Value = item.deathsPerOneMillion;
                 }
 
                 using (var stream = new MemoryStream())
@@ -219,7 +231,7 @@ namespace covid_19.Controllers
                     return File(
                         content,
                         "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                        "all-" + DateTime.Now.ToString("yyyyMMdd-HHmmss") + ".xlsx");
+                        "countries-" + DateTime.Now.ToString("yyyyMMdd-HHmmss") + ".xlsx");
                 }
             }
         }
