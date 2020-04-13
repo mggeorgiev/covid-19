@@ -58,7 +58,8 @@ namespace covid_19.Infrastructure
 
             if (responseTask.Result.IsSuccessStatusCode)
             {
-                List<countryDTO> countryList = JsonConvert.DeserializeObject<List<countryDTO>>(content);
+                List<countryDTO> countryList = JsonConvert.DeserializeObject<List<countryDTO>>(content,
+                    new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
                 countryList.RemoveAll(t => t.country == "Total:");
                 return countryList;
 
