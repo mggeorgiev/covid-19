@@ -17,16 +17,16 @@
     <thead>
         <tr>
             <th>
-                @Html.ActionLink(@Html.DisplayNameFor(model => model.Date),"Index", "AllMVC", new { sortOrder="asc"})
+                @Html.ActionLink(@Html.DisplayNameFor(model => model.Date),"Index", "AllMVC", new { sortOrder= ViewBag.DateSortParm })
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Cases)
+                @Html.ActionLink( @Html.DisplayNameFor(model => model.Cases), "Index", "AllMVC", new { sortOrder = ViewBag.CasesSortParam})
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Deaths)
+                @Html.ActionLink(@Html.DisplayNameFor(model => model.Deaths), "Index", "AllMVC", new { sortOrder = ViewBag.DeathsSortParam })
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Recovered)
+                @Html.ActionLink(@Html.DisplayNameFor(model => model.Recovered), "Index", "AllMVC", new { sortOrder = ViewBag.RecoveredSortParam })
             </th>
             <th></th>
         </tr>
