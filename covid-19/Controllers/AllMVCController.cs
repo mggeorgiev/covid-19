@@ -25,12 +25,41 @@ namespace covid_19.Controllers
         // GET: AllMVC
         public async Task<IActionResult> Index(string sortOrder)
         {
-            //if (sortOrder == "desc")
-            //    var all = await _context.All
-            //        .FirstOrDefaultAsync(m => m.Id == id);
+            ViewBag.DateSortParm = sortOrder == "asc" ? "date_desc" : "asc";
+            ViewBag.CasesSortParam = sortOrder == "cases_asc" ? "cases_desc" : "cases_asc";
+            ViewBag.DeathsSortParam = sortOrder == "deaths_asc" ? "deaths_desc" : "deaths_asc";
+            ViewBag.RecoveredSortParam = sortOrder == "recovered_asc" ? "recovered_desc" : "recovered_asc";
+            ViewBag.CurrentSort = sortOrder;
 
             var all = await _context.All.ToListAsync();
-            //sortOrder == "desc" ? all.OrderByDescending(a => a.Date) : all.OrderBy(a => a.Date);
+
+            switch (sortOrder)
+            {
+                case "date_desc":
+                    all = all.OrderByDescending(a => a.Date).ToList();
+                    break;
+                case "cases_asc":
+                    all = all.OrderBy(a => a.Cases).ToList();
+                    break;
+                case "cases_desc":
+                    all = all.OrderByDescending(a => a.Cases).ToList();
+                    break;
+                case "deaths_asc":
+                    all = all.OrderBy(a => a.Deaths).ToList();
+                    break;
+                case "deaths_desc":
+                    all = all.OrderByDescending(a => a.Deaths).ToList();
+                    break;
+                case "recovered_asc":
+                    all = all.OrderBy(a => a.Recovered).ToList();
+                    break;
+                case "recovered_desc":
+                    all = all.OrderByDescending(a => a.Recovered).ToList();
+                    break;
+                default:
+                    all = all.OrderBy(a => a.Date).ToList();
+                    break;
+            }
             return View(all);
         }
 
