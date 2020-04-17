@@ -1,4 +1,4 @@
-﻿@model covid_19.Models.Country
+﻿@model covid_19.ViewModels.CountryViewModel
 
 @{
     ViewData["Title"] = "Details";
@@ -11,58 +11,58 @@
     <h4>Country</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Name)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Name)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Cases)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Cases)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.TodayCases)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.TodayCases)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Deaths)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Deaths)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.TodayDeaths)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.TodayDeaths)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Recovered)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Recovered)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Active)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Active)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Critical)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Critical)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Date)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Date)
         </dd>
     </dl>
@@ -72,3 +72,102 @@
     <a asp-action="Delete" asp-route-id="@Model.Id">Delete</a> |
     <a asp-action="Index">Back to List</a>
 </div>
+
+@if (Model.countries.Count > 0)
+{
+    <div>
+        <hr />
+        <h4>Records for @Model.Name</h4>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Name)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Date)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Cases)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.TodayCases)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Deaths)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.TodayDeaths)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Recovered)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Active)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Critical)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.casesPerOneMillion)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.deathsPerOneMillion)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.testsPerOneMillion)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.totalTests)
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.countries)
+                {
+                    <tr>
+                        <td>
+                            <a asp-action="Details" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.Name)</a>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Date, "{yyyy-MM-dd}")
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Cases)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TodayCases)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Deaths)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TodayDeaths)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Recovered)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Active)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Critical)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.casesPerOneMillion)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.deathsPerOneMillion)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.testsPerOneMillion)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.totalTests)
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
