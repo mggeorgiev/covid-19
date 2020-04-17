@@ -11,29 +11,60 @@
     <h4>All</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Date)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Date)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Cases)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Cases)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Deaths)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Deaths)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Recovered)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Recovered)
+        </dd>
+        @*Bad practice*@
+        <dt class="col-sm-2">
+            Remaining
+        </dt>
+        <dd class="col-sm-10">
+            @Html.Label((Model.Cases - Model.Deaths - Model.Recovered).ToString())
+        </dd>
+        <dt class="col-sm-2">
+            Remaining %
+        </dt>
+        <dd class="col-sm-10">
+            @Html.Label(Model.GetRemainingPercent().ToString())
+        </dd>
+        <dt class="col-sm-2">
+            Recovered %
+        </dt>
+        <dd class="col-sm-10">
+            @Html.Label(Model.GetRecoveredPercent().ToString())
+        </dd>
+        <dt class="col-sm-2">
+            Death %
+        </dt>
+        <dd class="col-sm-10">
+            @Html.Label(Model.GetDeathPercent().ToString())
+        </dd>
+        <dt class="col-sm-2">
+            Recovered to Death
+        </dt>
+        <dd class="col-sm-10">
+            @Html.Label(Model.GetRecoveredToDeath().ToString())
         </dd>
     </dl>
 </div>

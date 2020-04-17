@@ -14,6 +14,31 @@ namespace covid_19.Models
         public int Deaths { get; set; }
         public int Recovered { get; set; }
 
+        public double GetRemaining() 
+        {
+            return Cases - Deaths - Recovered;
+        }
+
+        public double GetRemainingPercent()
+        {
+            return (Cases - Deaths - Recovered) * 100/ Cases;
+        }
+
+        public double GetRecoveredPercent()
+        {
+            return (Recovered) * 100 / Cases;
+        }
+
+        public double GetDeathPercent()
+        {
+            return (Deaths) * 100 / Cases;
+        }
+
+        public double GetRecoveredToDeath()
+        {
+            return (Recovered/Deaths);
+        }
+
         public All() {}
 
         public All(allDTO allDTO)
