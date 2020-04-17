@@ -43,7 +43,14 @@ namespace covid_19.Controllers
                 return NotFound();
             }
 
-            return View(country);
+            var list = await _context.Countries
+                                     .Where(c => c.Name == country.Name)
+                                     .OrderByDescending(d => d.Date)
+                                     .ToListAsync();
+
+            var countryViemModel = new covid_19.ViewModels.CountryViewModel(country, list);
+
+            return View(countryViemModel);
         }
 
         // GET: Countries/Create
