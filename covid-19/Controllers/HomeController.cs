@@ -25,6 +25,9 @@ namespace covid_19.Controllers
 
             all = Infrastructure.Heraku.GetAllDTOFromHeraku("");
 
+            if (all == null)
+                return View();
+
             return View(all);
         }
 
