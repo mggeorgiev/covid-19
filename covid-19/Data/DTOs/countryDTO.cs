@@ -28,6 +28,7 @@ namespace covid_19.Data.DTOs
         public int recovered { get; set; }
         [DisplayName("Active")]
         public int active { get; set; }
+        [DisplayName("Critical")]
         public int critical { get; set; }
         [DisplayName("Cases Per 1M")]
         public int casesPerOneMillion { get; set; }

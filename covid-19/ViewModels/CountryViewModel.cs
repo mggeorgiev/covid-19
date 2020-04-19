@@ -25,6 +25,7 @@ namespace covid_19.ViewModels
         public int Active { get; set; }
         [DisplayName("Critical")]
         public int Critical { get; set; }
+        [DisplayName("Cases Per 1M")]
         public int casesPerOneMillion { get; set; }
         [DisplayName("Deaths Per 1M")]
         public int deathsPerOneMillion { get; set; }
