@@ -22,21 +22,29 @@ namespace covid_19.Infrastructure
                 client.BaseAddress = new Uri("https://coronavirus-19-api.herokuapp.com/");
 
             var responseTask = client.GetAsync("all");
-            responseTask.Wait();
-
-
-            var content = responseTask.Result.Content.ReadAsStringAsync().Result;
-
-            if (responseTask.Result.IsSuccessStatusCode)
+            try
             {
-                allDTO alls = JsonConvert.DeserializeObject<allDTO>(content);
+                responseTask.Wait();
 
-                return alls;
+                var content = responseTask.Result.Content.ReadAsStringAsync().Result;
+
+                if (responseTask.Result.IsSuccessStatusCode)
+                {
+                    allDTO alls = JsonConvert.DeserializeObject<allDTO>(content);
+
+                    return alls;
+                }
+                else //web api sent error response 
+                {
+                    //log response status here..
+                    throw new NotImplementedException();
+                }
+
             }
-            else //web api sent error response 
+            catch (System.Exception e)
             {
-                //log response status here..
-                throw new NotImplementedException();
+                Console.WriteLine("Error reading from {0}. Message = {1}", e.TargetSite.Name.ToString(), e.Message);
+                return null;
             }
         }
 
