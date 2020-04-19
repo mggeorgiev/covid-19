@@ -23,9 +23,26 @@ namespace covid_19.Controllers
         }
 
         // GET: Countries
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString, string sortOrder, string currentFilter)
         {
-            return View(await _context.Countries.OrderByDescending(c=>c.Date).ThenByDescending(x=>x.Cases).ToListAsync());
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
+            ViewBag.GenreSortParam = sortOrder == "Genre" ? "genre_desc" : "Genre";
+            ViewBag.ItemsSortParam = sortOrder == "Items" ? "items_desc" : "Items";
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.CurrentSearch = searchString;
+            
+            if(!String.IsNullOrEmpty(currentFilter))
+                searchString = currentFilter;
+
+            ViewBag.CurrentFilter = searchString;
+
+            var countries = await _context.Countries.OrderByDescending(c => c.Date).ThenByDescending(x => x.Cases).ToListAsync();
+
+            if (!String.IsNullOrEmpty(searchString))
+                countries = countries.Where(c => c.Name.Contains(searchString)).ToList();
+
+            return View(countries);
         }
 
         // GET: Countries/Details/5
