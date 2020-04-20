@@ -59,40 +59,50 @@ namespace covid_19.Infrastructure
                 client.BaseAddress = new Uri("https://coronavirus-19-api.herokuapp.com/");
 
             var responseTask = client.GetAsync("countries");
-            responseTask.Wait();
 
-
-            var content = responseTask.Result.Content.ReadAsStringAsync().Result;
-
-            if (responseTask.Result.IsSuccessStatusCode)
+            try
             {
-                List<countryDTO> countryList = JsonConvert.DeserializeObject<List<countryDTO>>(content,
-                    new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
-                countryList.RemoveAll(t => t.country == "Total:");
-                return countryList;
 
-                //countryDTO alls = JsonConvert.DeserializeObject<countryDTO>(content);
-                //List<Country> list = new List<Country>();
+                responseTask.Wait();
 
-                //foreach (countryDTO item in countryList)
-                //{
-                //    Country country = new Country();
-                //    country.Name = item.country;
-                //    country.Recovered = item.recovered;
-                //    country.TodayCases = item.todayCases;
-                //    country.TodayDeaths = item.todayDeaths;
-                //    country.Active = item.active;
-                //    country.Critical = item.critical;
-                //    country.Cases = item.cases;
-                //    country.Deaths = item.deaths;
-                //    country.Date = DateTime.Now;
-                //    list.Add(country);
-                //}
-                //return list;
+
+                var content = responseTask.Result.Content.ReadAsStringAsync().Result;
+
+                if (responseTask.Result.IsSuccessStatusCode)
+                {
+                    List<countryDTO> countryList = JsonConvert.DeserializeObject<List<countryDTO>>(content,
+                        new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
+                    countryList.RemoveAll(t => t.country == "Total:");
+                    return countryList;
+
+                    //countryDTO alls = JsonConvert.DeserializeObject<countryDTO>(content);
+                    //List<Country> list = new List<Country>();
+
+                    //foreach (countryDTO item in countryList)
+                    //{
+                    //    Country country = new Country();
+                    //    country.Name = item.country;
+                    //    country.Recovered = item.recovered;
+                    //    country.TodayCases = item.todayCases;
+                    //    country.TodayDeaths = item.todayDeaths;
+                    //    country.Active = item.active;
+                    //    country.Critical = item.critical;
+                    //    country.Cases = item.cases;
+                    //    country.Deaths = item.deaths;
+                    //    country.Date = DateTime.Now;
+                    //    list.Add(country);
+                    //}
+                    //return list;
+                }
+                else //web api sent error response 
+                {
+                    //log response status here..
+                    return null;
+                }
             }
-            else //web api sent error response 
+            catch (System.Exception e)
             {
-                //log response status here..
+                Console.WriteLine("Error reading from {0}. Message = {1}", e.TargetSite.Name.ToString(), e.Message);
                 return null;
             }
         }
