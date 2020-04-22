@@ -27,7 +27,7 @@ namespace covid_19.Controllers
 
             all = Infrastructure.Heraku.GetAllDTOFromHeraku("");
 
-            if(all != null)
+            if (all != null)
                 return View(nameof(Index), all);
 
             return View();
@@ -51,7 +51,8 @@ namespace covid_19.Controllers
                 _context.Add(all);
                 await _context.SaveChangesAsync();
 
-                return View(nameof(Index), allDTO);
+                return RedirectToAction("Index", "AllMVC");
+                //return View(nameof(Index), allDTO);
             }
 
             return View();
@@ -89,7 +90,8 @@ namespace covid_19.Controllers
 
                 await _context.SaveChangesAsync();
 
-            return View(nameof(Countries), countries.OrderByDescending(c => c.cases).ToList());
+            return RedirectToAction("Index", "CountriesMVC");
+            //return View( ( nameof(Countries), countries.OrderByDescending(c => c.cases).ToList());
         }
     }
 }
