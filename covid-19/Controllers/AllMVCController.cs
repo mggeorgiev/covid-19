@@ -35,8 +35,8 @@ namespace covid_19.Controllers
 
             switch (sortOrder)
             {
-                case "date_desc":
-                    all = all.OrderByDescending(a => a.Date).ToList();
+                case "asc":
+                    all = all.OrderBy(a => a.Date).ToList();
                     break;
                 case "cases_asc":
                     all = all.OrderBy(a => a.Cases).ToList();
@@ -57,7 +57,7 @@ namespace covid_19.Controllers
                     all = all.OrderByDescending(a => a.Recovered).ToList();
                     break;
                 default:
-                    all = all.OrderBy(a => a.Date).ToList();
+                    all = all.OrderByDescending(a => a.Date).ToList();
                     break;
             }
             return View(all);
