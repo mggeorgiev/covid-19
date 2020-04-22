@@ -74,25 +74,6 @@ namespace covid_19.Infrastructure
                         new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
                     countryList.RemoveAll(t => t.country == "Total:");
                     return countryList;
-
-                    //countryDTO alls = JsonConvert.DeserializeObject<countryDTO>(content);
-                    //List<Country> list = new List<Country>();
-
-                    //foreach (countryDTO item in countryList)
-                    //{
-                    //    Country country = new Country();
-                    //    country.Name = item.country;
-                    //    country.Recovered = item.recovered;
-                    //    country.TodayCases = item.todayCases;
-                    //    country.TodayDeaths = item.todayDeaths;
-                    //    country.Active = item.active;
-                    //    country.Critical = item.critical;
-                    //    country.Cases = item.cases;
-                    //    country.Deaths = item.deaths;
-                    //    country.Date = DateTime.Now;
-                    //    list.Add(country);
-                    //}
-                    //return list;
                 }
                 else //web api sent error response 
                 {
