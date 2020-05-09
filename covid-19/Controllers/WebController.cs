@@ -73,7 +73,7 @@ namespace covid_19.Controllers
             throw new NotImplementedException();
         }
 
-        public async Task<IActionResult> SaveCountries(IEnumerable<countryDTO> countries, DateTime timestamp)
+        public async Task<IActionResult> SaveCountries(DateTime timestamp, IEnumerable<countryDTO> countries)
         {
             if (countries.Count() == 0)
                 countries = covid_19.Infrastructure.Heraku.GetCountryFromHeraku("");

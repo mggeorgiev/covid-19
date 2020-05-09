@@ -7,13 +7,14 @@
 
 <h1>Country</h1>
 @{DateTime timestamp = DateTime.Now; }
-@{IEnumerable<covid_19.Data.DTOs.countryDTO> dTOs = Model;}
+@{IEnumerable<covid_19.Data.DTOs.countryDTO> dTOs = Model.ToList();}
 
 <p>
     <a asp-action="SaveCountries"
-       asp-route-countries=@dTOs
-       asp-route-timestamp=@timestamp class="btn btn-outline-primary">Save</a> |
-    <a asp-controller="Web" asp-action="Countries" class="btn btn-outline-secondary">ReLoad</a>
+       asp-route-timestamp=@timestamp
+       asp-route-countries=@dTOs class="btn btn-outline-primary">Save</a> |
+    <a asp-controller="Web"
+       asp-action="Countries" class="btn btn-outline-secondary">ReLoad</a>
 </p>
 <table class="table">
     <thead>
