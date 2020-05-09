@@ -10,6 +10,7 @@ using covid_19.Models;
 using ClosedXML.Excel;
 using System.Text;
 using System.IO;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace covid_19.Controllers
 {
@@ -37,10 +38,20 @@ namespace covid_19.Controllers
 
             ViewBag.CurrentFilter = searchString;
 
-            var countries = await _context.Countries.OrderByDescending(c => c.Date).ThenByDescending(x => x.Cases).ToListAsync();
+            var countries = await _context.Countries
+                                          .OrderByDescending(c => c.Date)
+                                          .ThenByDescending(x => x.Cases)
+                                          .ToListAsync();
+
+            var datesRange = countries.Select(d => d.Date)
+                                      .Distinct()
+                                      .OrderByDescending(d => d.Date)
+                                      .ToList();
 
             if (!String.IsNullOrEmpty(searchString))
                 countries = countries.Where(c => c.Name.Contains(searchString)).ToList();
+            else
+                countries = countries.Where(c => c.Date == datesRange.Max()).ToList();
 
             return View(countries);
         }
