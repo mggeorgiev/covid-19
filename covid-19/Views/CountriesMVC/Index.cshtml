@@ -8,13 +8,13 @@
 <h1>Index of Coutry records</h1>
 
 <p>
-    <a asp-action="Create">Create New</a> |
+    <a asp-action="Create" class="btn btn-outline-primary">Create New</a> |
     <a asp-action="Csv" class="btn btn-outline-info">Export to CSV</a> |
     <a asp-action="Excel" class="btn btn-outline-success">Export to Excel</a>
     @using (Html.BeginForm("Index", "CountriesMVC", FormMethod.Get))
     {
         <div class="form-inline">
-            Country: @Html.TextBox("SearchString", null, new { @class = "form-control" }) 
+            Country: @Html.TextBox("SearchString", null, new { @class = "form-control" })  
             <input class="btn btn-info" type="submit" value="Filter" />
         <p></p>
         </div>

@@ -10,11 +10,11 @@
 @{IEnumerable<covid_19.Data.DTOs.countryDTO> dTOs = Model.ToList();}
 
 <p>
+    <a asp-controller="Web"
+       asp-action="Countries" class="btn btn-outline-primary">ReLoad</a> |
     <a asp-action="SaveCountries"
        asp-route-timestamp=@timestamp
-       asp-route-countries=@dTOs class="btn btn-outline-primary">Save</a> |
-    <a asp-controller="Web"
-       asp-action="Countries" class="btn btn-outline-secondary">ReLoad</a>
+       asp-route-countries=@dTOs class="btn btn-outline-secondary">Save</a>
 </p>
 <table class="table">
     <thead>
