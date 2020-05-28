@@ -10,6 +10,8 @@ using covid_19.Models;
 using System.Text;
 using ClosedXML.Excel;
 using System.IO;
+using covid_19.Data.Migrations;
+using ClosedXML;
 
 namespace covid_19.Controllers
 {
@@ -24,6 +26,76 @@ namespace covid_19.Controllers
 
         // GET: AllMVC
         public async Task<IActionResult> Index(string sortOrder)
+        {
+            ViewBag.DateSortParm = sortOrder == "asc" ? "date_desc" : "asc";
+            ViewBag.CasesSortParam = sortOrder == "cases_asc" ? "cases_desc" : "cases_asc";
+            ViewBag.DeathsSortParam = sortOrder == "deaths_asc" ? "deaths_desc" : "deaths_asc";
+            ViewBag.RecoveredSortParam = sortOrder == "recovered_asc" ? "recovered_desc" : "recovered_asc";
+            ViewBag.CurrentSort = sortOrder;
+
+            //var filter = from record in _context.All
+            //             group record by new
+            //             {
+            //                 record.Date.Year,
+            //                 record.Date.Month,
+            //                 record.Date.Day,
+            //             }
+            //                into g
+            //             select new
+            //             {
+            //                  Date = g.Max(c => c.Date)
+            //             };
+            //var distinctDates = await filter.ToListAsync();
+
+            //var allDistinct = await (from record in _context.All
+            //                         where distinctDates.Contains(new { record.Date })
+            //                         select record).ToListAsync();
+            //var allDistinct = _context.All
+            //                                .Where(x => distinctDates.Contains(new { x.Date }))
+            //                                .Tolist();
+
+            //var all = await _context.All.ToListAsync();
+            var all = await _context.All.FromSqlRaw("SELECT* FROM[All]" +
+                                                    "WHERE [Date] in " +
+                                                            "(SELECT TOP(1000) Max([Date])" +
+                                                                    "FROM[All]" +
+                                                                    "GROUP BY YEAR([Date])," +
+                                                                    "Month([Date])," +
+                                                                    "Day([Date]))"
+                                                    ).ToListAsync();
+
+            switch (sortOrder)
+            {
+                case "asc":
+                    all = all.OrderBy(a => a.Date).ToList();
+                    break;
+                case "cases_asc":
+                    all = all.OrderBy(a => a.Cases).ToList();
+                    break;
+                case "cases_desc":
+                    all = all.OrderByDescending(a => a.Cases).ToList();
+                    break;
+                case "deaths_asc":
+                    all = all.OrderBy(a => a.Deaths).ToList();
+                    break;
+                case "deaths_desc":
+                    all = all.OrderByDescending(a => a.Deaths).ToList();
+                    break;
+                case "recovered_asc":
+                    all = all.OrderBy(a => a.Recovered).ToList();
+                    break;
+                case "recovered_desc":
+                    all = all.OrderByDescending(a => a.Recovered).ToList();
+                    break;
+                default:
+                    all = all.OrderByDescending(a => a.Date).ToList();
+                    break;
+            }
+            return View(all);
+        }
+
+        // GET: AllMVC
+        public async Task<IActionResult> List(string sortOrder)
         {
             ViewBag.DateSortParm = sortOrder == "asc" ? "date_desc" : "asc";
             ViewBag.CasesSortParam = sortOrder == "cases_asc" ? "cases_desc" : "cases_asc";
