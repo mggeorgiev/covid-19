@@ -37,8 +37,10 @@ namespace covid_19.Controllers
                 searchString = currentFilter;
 
             ViewBag.CurrentFilter = searchString;
+            var maxDate = (from q in _context.Countries select q.Date).Max();
 
             var countries = await _context.Countries
+                                          .Where(d => d.Date == maxDate)
                                           .OrderByDescending(c => c.Date)
                                           .ThenByDescending(x => x.Cases)
                                           .ToListAsync();
