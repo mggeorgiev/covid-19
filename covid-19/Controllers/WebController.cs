@@ -23,6 +23,7 @@ namespace covid_19.Controllers
 
         public async Task<IActionResult> Index()
         {
+
             var all = new allDTO();
 
             all = Infrastructure.Heraku.GetAllDTOFromHeraku("");
